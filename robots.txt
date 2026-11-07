@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://malvo-eg.vercel.app/sitemap.xml

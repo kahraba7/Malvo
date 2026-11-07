@@ -1,6 +1,7 @@
 /* ---- Projects data: add approved projects here and they render automatically.
    { title:"Name", category:"Web Development", year:"2026", image:"/path.jpg", imageAlt:"...", url:"https://..." } ---- */
 const PROJECTS = [];
+const AR = document.documentElement.lang === 'ar', T = (e, a) => AR ? a : e;
 
 const $ = s => document.querySelector(s);
 const work = $('#work');
@@ -15,15 +16,15 @@ function renderProjects(){
   if (PROJECTS.length){ work.innerHTML = `<div class="pgrid">${PROJECTS.map(projectCard).join('')}</div>`; return; }
   const P = ['M0 0 L218 169 L167 218 L0 86 Z','M0 171 L72 227 L72 342 L0 342 Z','M167 262 L338 98 L338 192 L167 358 Z','M370 66 L442 0 L442 342 L370 342 Z'];
   const svg = `<svg viewBox="0 0 442 358" aria-hidden="true">${P.map((d,i)=>`<path class="bp-p bp-p${i+1}" pathLength="1" d="${d}"/>`).join('')}</svg>`;
-  const slots = [['01','Web Development'],['02','AI Solutions'],['03','Digital Products']]
-    .map(([n,t])=>`<div class="bp-slot"><b>${n}</b><h3>${t}</h3><p>Case study in progress</p><span class="bp-bar"><i></i></span></div>`).join('');
+  const slots = [['01',T('Web Development','تطوير الويب')],['02',T('AI Solutions','حلول الذكاء الاصطناعي')],['03',T('Digital Products','منتجات رقمية')]]
+    .map(([n,t])=>`<div class="bp-slot"><b>${n}</b><h3>${t}</h3><p>${T('Case study in progress','دراسة الحالة قيد الإعداد')}</p><span class="bp-bar"><i></i></span></div>`).join('');
   work.innerHTML = `<div class="bp" id="bp">
-    <div class="bp-top"><span>MALVO / PLATE 01</span><span class="bp-live"><i></i>Building</span></div>
+    <div class="bp-top"><span>MALVO / PLATE 01</span><span class="bp-live"><i></i>${T('Building','قيد البناء')}</span></div>
     <div class="bp-stage"><u class="bp-c a"></u><u class="bp-c b"></u><u class="bp-c c"></u><u class="bp-c d"></u>
       <div class="bp-mark">${svg}<span class="bp-scan"></span></div>
       <small class="bp-dim">442 × 358</small></div>
     <div class="bp-slots">${slots}</div>
-    <a class="bp-cta" href="#contact"><span>Want to be our first story?</span><span aria-hidden="true">↗</span></a></div>`;
+    <a class="bp-cta" href="#contact"><span>${T('Want to be our first story?','هل تريد أن تكون قصتنا الأولى؟')}</span><span aria-hidden="true">↗</span></a></div>`;
   const bp = document.getElementById('bp');
   if ('IntersectionObserver' in window){
     new IntersectionObserver((e,o)=>{ if (e[0].isIntersecting){ bp.classList.add('in'); o.disconnect(); } },{threshold:.25}).observe(bp);
@@ -37,7 +38,7 @@ addEventListener('scroll', onScroll, {passive:true}); onScroll();
 function setMenu(open){
   hdr.classList.toggle('open', open);
   burger.setAttribute('aria-expanded', open);
-  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  burger.setAttribute('aria-label', open ? T('Close menu','إغلاق القائمة') : T('Open menu','فتح القائمة'));
   document.body.style.overflow = open ? 'hidden' : '';
 }
 burger.addEventListener('click', () => setMenu(!hdr.classList.contains('open')));
@@ -65,7 +66,7 @@ addEventListener('scroll', tick, {passive:true}); addEventListener('resize', tic
   const P = ["M0 0 L218 169 L167 218 L0 86 Z","M0 171 L72 227 L72 342 L0 342 Z","M167 262 L338 98 L338 192 L167 358 Z","M370 66 L442 0 L442 342 L370 342 Z"];
   const touch = matchMedia('(hover:none)').matches;
   const sec = $('.hero'), c = $('#heroCv'), x = c.getContext('2d'), hint = $('#heroHint');
-  hint.textContent = touch ? 'Touch and drag through the M' : 'Move your cursor through the M';
+  hint.textContent = touch ? T('Touch and drag through the M','المس واسحب عبر الحرف M') : T('Move your cursor through the M','حرّك المؤشر عبر الحرف M');
   let w, h, pts = [], mx = -999, my = -999, s = 2, g = 6, geo = {}, tt = 0, vis = true, rings = [], hp = 0, first = true, last = 0, lw = innerWidth, lh = innerHeight;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   function init(){
@@ -154,19 +155,19 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   const d = Object.fromEntries(new FormData(form)); let ok = true;
   const rules = {
-    name: v => v.trim().length < 2 && 'Enter your name.',
-    email: v => !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) && 'Enter a valid email address.',
-    msg: v => v.trim().length < 10 && 'Describe your project in at least 10 characters.'
+    name: v => v.trim().length < 2 && T('Enter your name.','أدخل اسمك.'),
+    email: v => !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) && T('Enter a valid email address.','أدخل بريداً إلكترونياً صحيحاً.'),
+    msg: v => v.trim().length < 10 && T('Describe your project in at least 10 characters.','صف مشروعك في 10 أحرف على الأقل.')
   };
   for (const k in rules){
     const msg = rules[k](d[k] || ''), el = form.elements[k];
     document.querySelector(`[data-for=${k}]`).textContent = msg || '';
     el.setAttribute('aria-invalid', !!msg); if (msg && ok){ el.focus(); } if (msg) ok = false;
   }
-  if (!ok){ status.textContent = 'Please fix the highlighted fields.'; return; }
+  if (!ok){ status.textContent = T('Please fix the highlighted fields.','من فضلك صحّح الحقول المحددة.'); return; }
   const body = `${d.msg.trim()}\n\n— ${d.name.trim()} (${d.email.trim()})`;
-  location.href = `mailto:malvo.egypt@gmail.com?subject=${encodeURIComponent('Project inquiry from ' + d.name.trim())}&body=${encodeURIComponent(body)}`;
-  status.textContent = 'Your email app should open with the message ready to send. Nothing is sent until you send it there. If it doesn’t open, write to malvo.egypt@gmail.com.';
+  location.href = `mailto:malvo.egypt@gmail.com?subject=${encodeURIComponent(T('Project inquiry from ','استفسار مشروع من ') + d.name.trim())}&body=${encodeURIComponent(body)}`;
+  status.textContent = T('Your email app should open with the message ready to send. Nothing is sent until you send it there. If it doesn’t open, write to malvo.egypt@gmail.com.','سيفتح تطبيق البريد برسالتك جاهزة للإرسال. لن يُرسل شيء حتى ترسله من هناك. إن لم يفتح، راسلنا على malvo.egypt@gmail.com.');
 });
 
 /* hero buttons: cursor spotlight */
@@ -175,5 +176,5 @@ document.querySelectorAll('.hero .btn').forEach(el=>{
   el.addEventListener('pointerleave',()=>{el.style.setProperty('--rx','0deg');el.style.setProperty('--ry','0deg');});
 });
 
-(()=>{const w=document.querySelector('.why');if(!w)return;w.classList.add('js');
-if('IntersectionObserver' in window)new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){w.classList.add('in');o.disconnect()}},{threshold:.2}).observe(w);else w.classList.add('in')})();
+(()=>{const cs=document.querySelectorAll('.fc-card');if(!cs.length)return;cs.forEach(c=>c.classList.add('js'));
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.25});cs.forEach(c=>io.observe(c))}else cs.forEach(c=>c.classList.add('in'))})();

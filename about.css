@@ -9,9 +9,9 @@
 #about .ab-lead{font-size:20px;line-height:1.4;max-width:30ch}
 #about .ab-seg{display:flex;gap:6px;margin:0 0 14px;overflow-x:auto}
 #about .ab-seg button{position:relative;flex:none;border:1px solid var(--ab-line);background:#fff6;color:var(--ink);font:500 14px Inter;padding:9px 16px;border-radius:99px;cursor:pointer;overflow:hidden}
-#about .ab-seg button[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+#about .ab-seg button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
 #about .ab-seg button i{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--blue)}
-#about .ab-seg button[aria-selected=true] i{animation:ab-pg 6s linear forwards}
+#about .ab-seg button[aria-pressed=true] i{animation:ab-pg 6s linear forwards}
 @keyframes ab-pg{to{width:100%}}
 #about .ab-stage{position:relative;height:470px;transition:transform .2s;transform-style:preserve-3d}
 #about .ab-scene{position:absolute;inset:0;opacity:0;transform:translateY(14px);transition:.6s;pointer-events:none}
@@ -89,3 +89,5 @@
 #about .ab-scene.ab-on .ab-bub{opacity:1}
 #about .ab-ch path{stroke-dashoffset:0}
 }
+.w-top,.w-top *{font-size:14px}.w-cue{font-size:13px}
+#about .ab-seg .ab-pp{margin-inline-start:auto}#about .ab-seg.paused button i{animation:none;width:0}

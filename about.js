@@ -3,21 +3,36 @@
   if(!root)return;
   const sg=document.getElementById('ab-sg'),st=document.getElementById('ab-st');
   const sc=[...root.querySelectorAll('.ab-scene')];
-  const names=['Commerce','Analytics','AI assistant'];
+  const names=document.documentElement.lang==='ar'?['التجارة','التحليلات','مساعد ذكي']:['Commerce','Analytics','AI assistant'];
   let cur=0,tm,visible=true;
+  const AR=document.documentElement.lang==='ar';
+  let paused=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  sg.setAttribute('role','group');
 
   names.forEach((n,i)=>{
     const b=document.createElement('button');
-    b.type='button';b.setAttribute('role','tab');
+    b.type='button';
     b.innerHTML=n+'<i></i>';
-    b.addEventListener('click',()=>go(i));
+    b.addEventListener('click',()=>{setPaused(true);go(i)});
     sg.appendChild(b);
   });
 
+  const pp=document.createElement('button');
+  pp.type='button';pp.className='ab-pp';pp.textContent=AR?'إيقاف':'Pause';
+  pp.setAttribute('aria-pressed',paused);
+  pp.title=AR?'إيقاف التبديل التلقائي':'Pause automatic switching';
+  pp.addEventListener('click',()=>setPaused(!paused));
+  sg.appendChild(pp);
+  sg.classList.toggle('paused',paused);
+  function setPaused(v){
+    paused=v;pp.setAttribute('aria-pressed',v);sg.classList.toggle('paused',v);
+    if(v)clearTimeout(tm);else go(cur);
+  }
+
   function go(i){
     cur=i;clearTimeout(tm);
-    [...sg.children].forEach((b,j)=>{
-      b.setAttribute('aria-selected',j===i);
+    [...sg.children].filter(b=>b!==pp).forEach((b,j)=>{
+      b.setAttribute('aria-pressed',j===i);
       const p=b.querySelector('i');
       p.style.animation='none';void p.offsetWidth;p.style.animation='';
     });
@@ -25,7 +40,7 @@
       s.classList.remove('ab-on');
       if(j===i){void s.offsetWidth;s.classList.add('ab-on')}
     });
-    if(visible)tm=setTimeout(()=>go((i+1)%sc.length),6000);
+    if(visible&&!paused)tm=setTimeout(()=>go((i+1)%sc.length),6000);
   }
   go(0);
 
