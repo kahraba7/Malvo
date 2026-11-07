@@ -1,0 +1,91 @@
+/* About / brand hero (hero concept 3). Everything scoped to #about with ab- prefix. */
+#about{--ab-line:#c3c9d2;--ab-ok:#16a870}
+#about *{box-sizing:border-box;margin:0}
+#about{background:var(--mist);color:var(--ink);font:400 17px/1.55 Inter,system-ui,sans-serif;padding:0;overflow:hidden}
+#about .ab-h1,#about .ab-row h3,#about .ab-sg{font-family:'Space Grotesk',system-ui,sans-serif;letter-spacing:-.035em}
+#about .ab-seg button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+#about .ab-hero{max-width:1200px;margin:0 auto;padding:36px 20px 30px;display:grid;gap:30px;overflow:hidden}
+#about .ab-h1{font-size:clamp(48px,13.5vw,128px);font-weight:600;line-height:.95}
+#about .ab-lead{font-size:20px;line-height:1.4;max-width:30ch}
+#about .ab-seg{display:flex;gap:6px;margin:0 0 14px;overflow-x:auto}
+#about .ab-seg button{position:relative;flex:none;border:1px solid var(--ab-line);background:#fff6;color:var(--ink);font:500 14px Inter;padding:9px 16px;border-radius:99px;cursor:pointer;overflow:hidden}
+#about .ab-seg button[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+#about .ab-seg button i{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--blue)}
+#about .ab-seg button[aria-selected=true] i{animation:ab-pg 6s linear forwards}
+@keyframes ab-pg{to{width:100%}}
+#about .ab-stage{position:relative;height:470px;transition:transform .2s;transform-style:preserve-3d}
+#about .ab-scene{position:absolute;inset:0;opacity:0;transform:translateY(14px);transition:.6s;pointer-events:none}
+#about .ab-scene.ab-on{opacity:1;transform:none}
+#about .ab-win{position:absolute;left:0;top:10px;width:88%;height:310px;background:#fff;border-radius:14px;box-shadow:0 30px 60px #15171930;overflow:hidden}
+#about .ab-tb{height:30px;background:#f0f2f5;display:flex;gap:6px;align-items:center;padding:0 11px;font:11px Inter;color:var(--sub)}
+#about .ab-tb i{width:9px;height:9px;border-radius:50%;background:#c3c9d2}
+#about .ab-tb span{margin-left:10px;background:#fff;border-radius:99px;padding:2px 12px}
+#about .ab-bd{padding:14px}
+#about .ab-shim{position:relative;overflow:hidden}
+#about .ab-shim:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,#fff7 50%,transparent 70%);animation:ab-sh 2.4s infinite}
+@keyframes ab-sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+#about .ab-ban{height:104px;border-radius:10px;background:linear-gradient(90deg,var(--blue),#7b95ff);margin-bottom:10px}
+#about .ab-g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+#about .ab-pr{background:#f3f5f9;border-radius:9px;padding:8px}
+#about .ab-pr u{display:block;aspect-ratio:1;border-radius:6px;margin-bottom:7px}
+#about .ab-pr s{display:block;height:7px;border-radius:4px;background:#d9dfe8;margin-top:5px;width:70%}
+#about .ab-pr b{font:600 12px 'Space Grotesk'}
+#about .ab-kp{background:#f3f5f9;border-radius:9px;padding:9px}
+#about .ab-kp small{font-size:10px;color:var(--sub)}
+#about .ab-kp b{display:block;font:600 18px 'Space Grotesk'}
+#about .ab-ch{height:150px;margin-top:10px;width:100%}
+#about .ab-ch path{fill:none;stroke:var(--blue);stroke-width:3;stroke-dasharray:700;stroke-dashoffset:700}
+#about .ab-scene.ab-on .ab-ch path{animation:ab-dw 2.2s .3s ease forwards}
+@keyframes ab-dw{to{stroke-dashoffset:0}}
+#about .ab-ch .ab-a{fill:#315BFF18;stroke:none;stroke-dasharray:none;stroke-dashoffset:0;opacity:0}
+#about .ab-scene.ab-on .ab-ch .ab-a{animation:ab-fi 1s 1.6s forwards}
+@keyframes ab-fi{to{opacity:1}}
+#about .ab-bub{max-width:78%;padding:9px 12px;border-radius:14px;font-size:13px;line-height:1.35;margin-bottom:9px;opacity:0}
+#about .ab-scene.ab-on .ab-bub{animation:ab-up .5s forwards}
+#about .ab-bub.ab-u{background:#eef1f6;margin-left:auto}
+#about .ab-bub.ab-a{background:var(--blue);color:#fff}
+#about .ab-scene.ab-on .ab-bub:nth-child(1){animation-delay:.3s}
+#about .ab-scene.ab-on .ab-bub:nth-child(2){animation-delay:1.3s}
+#about .ab-scene.ab-on .ab-bub:nth-child(3){animation-delay:2.6s}
+@keyframes ab-up{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+#about .ab-ph{position:absolute;right:2%;top:130px;width:184px;height:340px;background:var(--ink);border-radius:34px;padding:8px;box-shadow:0 30px 60px #15171955}
+#about .ab-sc{height:100%;border-radius:27px;background:var(--paper);padding:30px 11px 11px;overflow:hidden;position:relative}
+#about .ab-sc:before{content:"";position:absolute;top:8px;left:50%;width:54px;height:15px;border-radius:9px;background:var(--ink);transform:translateX(-50%)}
+#about .ab-sc .ab-im{height:96px;border-radius:12px;background:linear-gradient(135deg,#9bb0ff,var(--blue))}
+#about .ab-ln{height:8px;border-radius:4px;background:#d9dfe8;margin-top:8px}
+#about .ab-cta{margin-top:12px;border-radius:99px;background:var(--ink);color:#fff;text-align:center;font:500 13px Inter;padding:11px;animation:ab-pu 1.8s infinite}
+@keyframes ab-pu{50%{background:var(--blue)}}
+#about .ab-bars{display:flex;gap:6px;align-items:flex-end;height:110px;background:var(--blue);border-radius:12px;padding:10px}
+#about .ab-bars i{flex:1;background:#fff;border-radius:4px;animation:ab-gr 2.6s ease-in-out infinite alternate}
+#about .ab-bars i:nth-child(2){animation-delay:.3s}
+#about .ab-bars i:nth-child(3){animation-delay:.6s}
+#about .ab-bars i:nth-child(4){animation-delay:.9s}
+#about .ab-bars i:nth-child(5){animation-delay:1.2s}
+@keyframes ab-gr{from{height:20%}to{height:95%}}
+#about .ab-toast{position:absolute;left:8px;right:8px;top:-60px;background:#fff;border-radius:14px;padding:9px 11px;font:500 12px Inter;box-shadow:0 10px 24px #15171933;display:flex;gap:8px;align-items:center;z-index:3}
+#about .ab-toast:before{content:"";flex:none;width:22px;height:22px;border-radius:7px;background:var(--ab-ok)}
+#about .ab-scene.ab-on .ab-toast{animation:ab-ts 4.4s 1.6s forwards}
+@keyframes ab-ts{12%,80%{top:30px}100%{top:-60px}}
+#about .ab-chip{position:absolute;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:0 14px 30px #15171926;font:600 20px 'Space Grotesk';animation:ab-fl 5s ease-in-out infinite alternate;z-index:4}
+#about .ab-chip small{display:block;font:400 11px Inter;color:var(--sub)}
+@keyframes ab-fl{to{transform:translateY(-12px)}}
+#about .ab-chip.ab-a{left:0;top:268px}
+#about .ab-chip.ab-b{right:0;top:0;animation-delay:-2s}
+#about .ab-sec{max-width:1200px;margin:0 auto;padding:60px 20px 90px;display:grid;gap:44px}
+#about .ab-sec .ab-big{font-size:clamp(24px,4.4vw,40px);line-height:1.2;font-weight:500;max-width:22ch}
+#about .ab-sec .ab-sub{color:var(--sub);max-width:46ch}
+#about .ab-rows{border-top:1px solid var(--ink)}
+#about .ab-row{display:grid;grid-template-columns:54px 1fr;gap:16px;padding:22px 0;border-bottom:1px solid var(--ab-line);align-items:center}
+#about .ab-row svg{width:44px;height:36px}
+#about .ab-row path{fill:var(--ink);transition:fill .3s}
+#about .ab-row:hover path,#about .ab-row.ab-in path{fill:var(--blue)}
+#about .ab-row h3{font-size:clamp(24px,5vw,38px);font-weight:600;line-height:1.05}
+#about .ab-row p{color:var(--sub);font-size:15px;margin-top:4px}
+@media(min-width:820px){#about .ab-hero{grid-template-columns:1.05fr 1fr;align-items:center;padding-top:70px}
+#about .ab-stage{height:520px}
+#about .ab-sec{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){#about *{animation:none!important}
+#about .ab-scene.ab-on .ab-bub{opacity:1}
+#about .ab-ch path{stroke-dashoffset:0}
+}
