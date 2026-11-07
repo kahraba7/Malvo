@@ -137,6 +137,14 @@ addEventListener('scroll', tick, {passive:true}); addEventListener('resize', tic
   addEventListener('scroll', () => { hp = clamp(scrollY / (h * .8), 0, 1); }, {passive:true});
   let rt; addEventListener('resize', () => { if (innerWidth === lw && Math.abs(innerHeight - lh) < 150) return; clearTimeout(rt); rt = setTimeout(() => { lw = innerWidth; lh = innerHeight; init(); }, 150); });
   new IntersectionObserver(e => { vis = e[0].isIntersecting; }).observe(sec);
+  /* re-fit when the hero or its text box changes size (fonts, slow load, browser toolbars) so the M never drifts behind the text */
+  const key = () => { const r = sec.getBoundingClientRect(), t = $('.hero .txt').getBoundingClientRect(); return [r.width, r.height, t.top - r.top, t.height]; };
+  let lk = null, st;
+  const fit = () => { clearTimeout(st); st = setTimeout(() => { const k = key(); if (!lk || k.some((v, i) => Math.abs(v - lk[i]) > 1)) { lw = innerWidth; lh = innerHeight; init(); } }, 100); };
+  const _init = init; init = function(){ _init(); lk = key(); };
+  if (window.ResizeObserver){ const ro = new ResizeObserver(fit); ro.observe(sec); ro.observe($('.hero .txt')); }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  addEventListener('load', fit); addEventListener('pageshow', fit);
   init(); loop();
 })();
 
