@@ -6,8 +6,8 @@ points every .html file at them, adds preloads, and tightens vercel.json (no Goo
 Safe to re-run."""
 import glob, json, os, re, urllib.request
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'
-SETS = {'fonts.css': ('Inter:wght@400;500&family=Space+Grotesk:wght@500;600;700', 'latin'),
-        'fonts-ar.css': ('Cairo:wght@400;500;600;700', 'arabic')}
+SETS = {'fonts.css': ('Inter:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=Cormorant+Garamond:wght@500;600', 'latin'),
+        'fonts-ar.css': ('Cairo:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600&family=Readex+Pro:wght@300;400;500', 'arabic')}
 
 def get(url, binary=False):
     data = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': UA})).read()

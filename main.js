@@ -1,7 +1,18 @@
 /* ---- Projects data: add approved projects here and they render automatically.
    { title:"Name", category:"Web Development", year:"2026", image:"/path.jpg", imageAlt:"...", url:"https://..." } ---- */
-const PROJECTS = [];
 const AR = document.documentElement.lang === 'ar', T = (e, a) => AR ? a : e;
+const PROJECTS = [{
+  featured:true,
+  title:T('Kanzel','كنزل'),
+  category:T('Restaurant System','نظام مطعم'),
+  year:'2026',
+  desc:T('A complete digital experience for Kanzel Restaurant & Lounge: a menu with search and dish photos, table and event booking, ordering from the table by QR with orders reaching the waiter in real time, and dedicated screens for waiters, reception and the owner.',
+         'تجربة رقمية متكاملة لمطعم كنزل: منيو بالبحث وصور الأطباق، حجز الطاولات والمناسبات، الطلب من الطاولة عبر QR مع وصول الطلبات للويتر لحظياً، وشاشات مخصصة للويتر والاستقبال والمالك.'),
+  tags:[T('Menu','المنيو'),T('Booking','الحجز'),T('QR ordering','طلب بالـ QR'),T('Real-time orders','طلبات لحظية'),T('Waiter screen','شاشة الويتر'),T('Owner dashboard','لوحة المالك')],
+  video:'kanzel-reel.mp4', image:'kanzel-poster.jpg',
+  imageAlt:T('Kanzel restaurant system on a phone','نظام مطعم كنزل على الموبايل'),
+  url:'https://kanzel-eg.vercel.app', cta:T('Visit live site','زيارة الموقع')
+}];
 
 const $ = s => document.querySelector(s);
 const work = $('#work');
@@ -12,8 +23,31 @@ function projectCard(p){
     ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.imageAlt || p.title)}" loading="lazy">` : ''}
     <h3>${esc(p.title)}</h3><p>${esc([p.category, p.year].filter(Boolean).join(' — '))}</p></${tag}>`;
 }
+function featCard(p){
+  return `<article class="feat">
+    <div class="feat-txt">
+      <p class="feat-k"><span>01</span>${esc([p.category, p.year].filter(Boolean).join(' — '))}</p>
+      <h3>${esc(p.title)}</h3>
+      <p class="feat-d">${esc(p.desc)}</p>
+      <ul class="feat-tags">${p.tags.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>
+      <a class="btn pri" href="${esc(p.url)}" target="_blank" rel="noopener"><span>${esc(p.cta)}</span><span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="feat-media">
+      <video muted loop playsinline preload="none" poster="${esc(p.image)}" aria-label="${esc(p.imageAlt)}"><source src="${esc(p.video)}" type="video/mp4"></video>
+    </div>
+  </article>`;
+}
+function playOnView(){
+  const v = document.querySelector('.feat-media video'); if (!v) return;
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(e => { e.forEach(x => x.isIntersecting ? v.play().catch(()=>{}) : v.pause()); },{threshold:.35}).observe(v);
+}
 function renderProjects(){
-  if (PROJECTS.length){ work.innerHTML = `<div class="pgrid">${PROJECTS.map(projectCard).join('')}</div>`; return; }
+  if (PROJECTS.length){
+    const F = PROJECTS.filter(p => p.featured), O = PROJECTS.filter(p => !p.featured);
+    work.innerHTML = F.map(featCard).join('') + (O.length ? `<div class="pgrid">${O.map(projectCard).join('')}</div>` : '');
+    playOnView(); return;
+  }
   const P = ['M0 0 L218 169 L167 218 L0 86 Z','M0 171 L72 227 L72 342 L0 342 Z','M167 262 L338 98 L338 192 L167 358 Z','M370 66 L442 0 L442 342 L370 342 Z'];
   const svg = `<svg viewBox="0 0 442 358" aria-hidden="true">${P.map((d,i)=>`<path class="bp-p bp-p${i+1}" pathLength="1" d="${d}"/>`).join('')}</svg>`;
   const slots = [['01',T('Web Development','تطوير الويب')],['02',T('AI Solutions','حلول الذكاء الاصطناعي')],['03',T('Digital Products','منتجات رقمية')]]

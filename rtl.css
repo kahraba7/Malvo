@@ -9,3 +9,5 @@ nav a:not(.btn)::after{left:auto;right:0;transform-origin:right}
 @media(min-width:861px){.hero .txt{max-width:min(100%,540px)}}
 @media(min-width:861px){#contact::before{left:auto;right:-14%}}
 html[dir=rtl] body{font-size:18px}
+
+.feat-k{letter-spacing:0;text-transform:none}.rs-fig figcaption{letter-spacing:0;text-transform:none}

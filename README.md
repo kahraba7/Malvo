@@ -29,3 +29,16 @@ Edit the PROJECTS array at the top of main.js:
 
 ## Fonts (self-hosting)
 Run `python3 self-host-fonts.py` once with internet access (before deploying). It downloads Inter, Space Grotesk and Cairo as woff2 into fonts/, switches every page to local fonts.css / fonts-ar.css with preloads, and removes Google hosts from the CSP in vercel.json.
+
+## Kanzel (first project)
+- Featured project is defined in the PROJECTS array at the top of main.js (EN/AR text via T()). Assets: kanzel-reel.mp4 (silent 12s loop), kanzel-poster.jpg, kanzel-screens.jpg (phone number blurred).
+- The "Restaurants" section (#restaurants) is the Kanzel world, in index.html and ar.html. Styles: kanzel.css (Kanzel's palette and fonts are scoped to .kz). Script: kanzel.js.
+  1. Entry: ink -> Kanzel green, arch + logo draw in.
+  2. Live phone: the real site in an iframe (data-src on .kz-frame, default https://kanzel-eg.vercel.app/) + a QR for desktop visitors. Small screens load it on tap.
+  3. Scroll story: 6 chapters (guest scan, choose, send, waiter, reception, owner) drive the drawn screens. Dish photos kz-d1..6.jpg, logo kz-logo.png. Screens are illustrations: numbers are sample data.
+  4. Exit: the green wipes to white and we are back in MALVO's world.
+- If the Kanzel domain changes: update data-src, the href of the "Open the full site" link and the QR (see below) in both pages, and frame-src in vercel.json.
+- The QR is an inline SVG symbol (#kz-qr). Regenerate it with any QR tool and replace the path in both pages.
+
+## Kanzel story (two phones)
+kanzel-sim.js + kanzel-sim.css: autoplay scenario (guest chat, booking, QR scan, order, waiter confirm/edit/decline/cancel, call, sold out). Edit copy and dishes at the top of kanzel-sim.js (TX and DB). Chapter lengths are only used for the progress line.
