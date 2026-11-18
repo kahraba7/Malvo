@@ -348,3 +348,5 @@ html[dir=rtl] .s6 .k-tr u::after{transform-origin:right}
 .kz-wp{position:relative;inset:auto;clip-path:none;padding:clamp(72px,10vw,140px) var(--pad)}.kz-wp>*{opacity:1;transform:none}
 .s1 .k-vf u{opacity:1;top:50%}
 }
+
+.kz h1.kz-h{max-width:none}

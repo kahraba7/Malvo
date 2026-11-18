@@ -29,7 +29,7 @@ else if(IO)new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){start();o.di
 else start();
 
 /* 4. exit: green -> white wipe */
-const out=$('#kz-out');
+const out=$('#kz-out');let tk=0;
 function frame(){
   tk=0;const vh=innerHeight;
     const or=out.getBoundingClientRect(),q=cl(-or.top/(or.height-vh)),t=RM?1:cl((q-.12)/.62);

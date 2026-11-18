@@ -11,3 +11,4 @@ nav a:not(.btn)::after{left:auto;right:0;transform-origin:right}
 html[dir=rtl] body{font-size:18px}
 
 .feat-k{letter-spacing:0;text-transform:none}.rs-fig figcaption{letter-spacing:0;text-transform:none}
+.logo{direction:ltr}
