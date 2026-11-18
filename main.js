@@ -183,14 +183,14 @@ addEventListener('scroll', tick, {passive:true}); addEventListener('resize', tic
   init(); loop();
 })();
 
-/* Contact form: no backend, so it composes an email in the visitor's mail app. */
+/* Contact form: no backend, so it opens WhatsApp with the message ready to send. */
 const form = $('#form'), status = $('#status');
 form.addEventListener('submit', e => {
   e.preventDefault();
   const d = Object.fromEntries(new FormData(form)); let ok = true;
   const rules = {
     name: v => v.trim().length < 2 && T('Enter your name.','أدخل اسمك.'),
-    email: v => !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) && T('Enter a valid email address.','أدخل بريداً إلكترونياً صحيحاً.'),
+    email: v => v.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) && T('Enter a valid email address.','أدخل بريداً إلكترونياً صحيحاً.'),
     msg: v => v.trim().length < 10 && T('Describe your project in at least 10 characters.','صف مشروعك في 10 أحرف على الأقل.')
   };
   for (const k in rules){
@@ -199,9 +199,9 @@ form.addEventListener('submit', e => {
     el.setAttribute('aria-invalid', !!msg); if (msg && ok){ el.focus(); } if (msg) ok = false;
   }
   if (!ok){ status.textContent = T('Please fix the highlighted fields.','من فضلك صحّح الحقول المحددة.'); return; }
-  const body = `${d.msg.trim()}\n\n— ${d.name.trim()} (${d.email.trim()})`;
-  location.href = `mailto:malvo.egypt@gmail.com?subject=${encodeURIComponent(T('Project inquiry from ','استفسار مشروع من ') + d.name.trim())}&body=${encodeURIComponent(body)}`;
-  status.textContent = T('Your email app should open with the message ready to send. Nothing is sent until you send it there. If it doesn’t open, write to malvo.egypt@gmail.com.','سيفتح تطبيق البريد برسالتك جاهزة للإرسال. لن يُرسل شيء حتى ترسله من هناك. إن لم يفتح، راسلنا على malvo.egypt@gmail.com.');
+  const em = d.email.trim(), body = T('Hello MALVO, I’m ','أهلاً MALVO، أنا ') + d.name.trim() + '.\n\n' + d.msg.trim() + (em ? '\n\n' + em : '');
+  const a = document.createElement('a'); a.href = `https://wa.me/201271570930?text=${encodeURIComponent(body)}`; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+  status.textContent = T('WhatsApp should open with your message ready to send. Nothing is sent until you send it there.','سيفتح واتساب برسالتك جاهزة للإرسال. لن يُرسل شيء حتى ترسله من هناك.');
 });
 
 /* hero buttons: cursor spotlight */

@@ -419,3 +419,21 @@ label{font-size:15px;color:#B4BBC5}.err{font-size:14px}
 .rs-cta{margin-top:clamp(36px,5vw,60px)}
 @media(max-width:860px){.feat{grid-template-columns:1fr}.feat-media{order:-1;width:min(78%,300px)}.rs-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.rs-grid{grid-template-columns:1fr}}
+
+/* WhatsApp floating button */
+.wa{position:fixed;z-index:45;inset-inline-end:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .25s var(--ease)}
+.wa:hover{transform:scale(1.07)}.wa:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.wa svg{width:28px;height:28px;fill:currentColor}
+/* touch targets: at least 44px */
+@media(max-width:860px),(pointer:coarse){
+.skip{min-height:44px}
+.logo{min-height:44px}
+.sc{min-height:44px}
+.links a{min-height:48px}
+input,textarea{min-height:44px}
+footer ul{gap:0}
+footer li a{display:inline-flex;align-items:center;min-height:44px}
+.copy a{display:inline-block;padding:12px 0}
+#about .ab-seg button,#about .ab-pp{min-height:44px}
+}
+@media(max-width:860px){html .sc{display:none}}

@@ -10,8 +10,8 @@ const fmt=n=>n.toLocaleString('en-US');
 /* ---------- copy ---------- */
 const TX={en:{
  egp:'EGP',tbl:'Table',lbG:['Sara · on chat','Omar · Table 5'],lbR:['Kanzel staff','Reception','Waiter · Ahmed'],ahmed:'Ahmed',
- ch:[['Ask on chat.','A guest asks for the menu. The reply carries a link that opens it. No app, no sign-up.'],
-  ['Book a table.','Another message, another link: the booking form opens ready to fill. Reception confirms and the guest hears back in the chat.'],
+ ch:[['Ask on chat.','A guest asks for the menu. The reply carries one link with two buttons: the menu and a table booking. No app, no sign-up.'],
+  ['Book a table.','Same link, other button: the booking form opens ready to fill. Reception confirms and the guest hears back in the chat.'],
   ['Scan the table’s QR.','At the restaurant, the table number is already inside the code.'],
   ['Pick and send.','Photos, quantities and a note for the kitchen. One tap sends it to the waiter.'],
   ['The waiter confirms.','It lands in real time. The waiter edits it, confirms it, and the guest sees every change.'],
@@ -20,8 +20,7 @@ const TX={en:{
   ['Changed their mind? Cancel.','A call from the table, then a confirmed order cancelled with a reason the guest can see.']],
  pause:'Pause',play:'Play',note:'Screens redrawn for illustration.',
  chatName:'Kanzel',chatSub:'online',ph:'Message',
- m1:'Hi! Can I see the menu?',r1:'Welcome to Kanzel. Here is our menu:',lk1:'Kanzel · Menu',
- m2:'Thanks! Can I book a table for Friday?',r2:'Of course. Fill this in and reception will confirm:',lk2:'Kanzel · Book a table',
+ m1:'Hi! Can I see the menu?',r1:'Welcome to Kanzel. Our menu and table booking, in one link:',lk1:'Kanzel',
  r3:'Your table is confirmed ✓<br>Fri 20 Nov · 9:00 PM · 4 guests',
  menu:'Menu',tabs:['Food','Drinks','Desserts','Shisha'],book:'Book a table',fDate:'Date',fName:'Reservation name',fGuests:'Total number of guests',fPhone:'Phone number',fTime:'Arrival time',
  date:'Fri 20 Nov',name:'Sara Hassan',phone:'0100 555 0142',times:['8:00 PM','9:00 PM','10:00 PM'],bGo:'Confirm booking',sent:'Request sent',sentS:'Reception will confirm on chat.',
@@ -42,8 +41,8 @@ const TX={en:{
  clk:['9:12 PM','9:48 PM','10:21 PM','10:34 PM'],now:'now'},
 ar:{
  egp:'ج.م',tbl:'ترابيزة',lbG:['سارة · على الشات','عمر · ترابيزة 5'],lbR:['فريق Kanzel','الريسبشن','الويتر · أحمد'],ahmed:'أحمد',
- ch:[['اسأل على الشات.','ضيف بيسأل عن المنيو. الرد فيه لينك بيفتحه. من غير تطبيق ولا تسجيل.'],
-  ['احجز ترابيزة.','رسالة تانية ولينك تاني: فورم الحجز بيفتح جاهز. الريسبشن بيأكد والضيف بيعرف على الشات.'],
+ ch:[['اسأل على الشات.','ضيف بيسأل عن المنيو. الرد فيه لينك واحد فيه زرارين: المنيو وحجز ترابيزة. من غير تطبيق ولا تسجيل.'],
+  ['احجز ترابيزة.','نفس اللينك، زرار تاني: فورم الحجز بيفتح جاهز. الريسبشن بيأكد والضيف بيعرف على الشات.'],
   ['امسح QR الترابيزة.','في المطعم، رقم الترابيزة جوه الكود.'],
   ['اختار وابعت.','صور وكميات وملاحظة للمطبخ. ضغطة واحدة بتوصّل الطلب للويتر.'],
   ['الويتر بيأكد.','الطلب بيوصل لحظياً. الويتر بيعدّله وبيأكده والضيف بيشوف كل تغيير.'],
@@ -52,8 +51,7 @@ ar:{
   ['غيّر رأيه؟ الغي.','نداء من الترابيزة، وبعدين طلب متأكد بيتلغي بسبب الضيف بيشوفه.']],
  pause:'إيقاف مؤقت',play:'تشغيل',note:'شاشات مُعاد رسمها للتوضيح.',
  chatName:'Kanzel',chatSub:'متصل',ph:'اكتب رسالة',
- m1:'أهلاً! ممكن أشوف المنيو؟',r1:'أهلاً بيك في Kanzel. دي المنيو:',lk1:'Kanzel · المنيو',
- m2:'شكراً! ممكن أحجز ترابيزة يوم الجمعة؟',r2:'أكيد. املا الفورم دي والريسبشن هيأكد:',lk2:'Kanzel · احجز ترابيزة',
+ m1:'أهلاً! ممكن أشوف المنيو؟',r1:'أهلاً بيك في Kanzel. المنيو وحجز الترابيزة في لينك واحد:',lk1:'Kanzel',
  r3:'ترابيزتك اتأكدت ✓<br>الجمعة 20 نوفمبر · 9:00 م · 4 أفراد',
  menu:'المنيو',tabs:['أكل','مشروبات','حلويات','شيشة'],book:'احجز ترابيزة',fDate:'التاريخ',fName:'اسم الحجز',fGuests:'إجمالي عدد الأفراد',fPhone:'رقم الموبايل',fTime:'وقت الوصول',
  date:'الجمعة 20 نوفمبر',name:'سارة حسن',phone:'0100 555 0142',times:['8:00 م','9:00 م','10:00 م'],bGo:'أكّد الحجز',sent:'الطلب اتبعت',sentS:'الريسبشن هيأكد على الشات.',
@@ -129,7 +127,9 @@ const CANCEL=Symbol('c');
 const W=ms=>new Promise((ok,no)=>{const id=run;if(fast)return ok();let left=ms,last=performance.now();(function tick(){if(id!==run)return no(CANCEL);const n=performance.now();if(!paused&&vis)left-=n-last;last=n;left<=0?ok():setTimeout(tick,30)})()});
 const show=(vp,id)=>$$('.q-s',vp).forEach(e=>e.classList.toggle('on',e.dataset.s===id));
 const ov=(el,on)=>el.classList.toggle('on',on);
-const act=side=>{dvL.classList.toggle('act',side==='L');dvR.classList.toggle('act',side==='R')};
+const stg=$('.kzs-st');
+const two=on=>stg.classList.toggle('two',!!on);
+const act=side=>{if(side==='R')two(true);dvL.classList.toggle('act',side==='L');dvR.classList.toggle('act',side==='R')};
 const lab=(side,i)=>{(side==='L'?$('.kzs-lb',dvL):$('.kzs-lb',dvR)).textContent=(side==='L'?t.lbG:t.lbR)[i]};
 async function tap(vp,el){act(vp===L?'L':'R');if(fast||!el)return;const f=g(vp,'.q-fg'),r=el.getBoundingClientRect(),v=vp.getBoundingClientRect(),s=v.width/390;
  f.style.left=((r.left+r.width/2-v.left)/s)+'px';f.style.top=((r.top+r.height*.55-v.top)/s)+'px';f.classList.add('go');clearTimeout(f._h);f._h=setTimeout(()=>f.classList.remove('go'),2200);
@@ -142,7 +142,7 @@ async function notify(a,b){$('#ntT',R).textContent=a;$('#ntS',R).textContent=b;o
 const ms=$('#ms',L),ty=$('#ty',L),inp=$('#inp',L);
 function msg(html,me){const d=document.createElement('div');d.className='q-b '+(me?'me':'th');d.innerHTML=html;ms.insertBefore(d,ty);ms.scrollTop=1e5;requestAnimationFrame(()=>requestAnimationFrame(()=>d.classList.add('q-on')));return d}
 async function ask(txt){act('L');await type(inp,txt,42);await tap(L,$('#snd',L));inp.textContent='';msg(esc(txt),1);await W(400)}
-async function reply(html,link){ov(ty,true);ty.classList.add('on');ms.scrollTop=1e5;await W(1100);ty.classList.remove('on');return msg(html+(link?`<div class="q-lk" data-lk="${link[0]}"><div class="im"><img src="${LOGO}" alt=""></div><div class="tx"><b>${link[1]}</b><small>kanzel-eg.vercel.app${link[0]==='book'?'/booking':''}</small></div></div>`:''),0)}
+async function reply(html,card){ov(ty,true);ty.classList.add('on');ms.scrollTop=1e5;await W(1100);ty.classList.remove('on');return msg(html+(card?`<div class="q-lk"><div class="im"><img src="${LOGO}" alt=""></div><div class="tx"><b>${t.lk1}</b><small>kanzel-eg.vercel.app</small></div><div class="q-lbs"><span class="q-lbtn" data-lk="menu">${t.menu}</span><span class="q-lbtn" data-lk="book">${t.book}</span></div></div>`:''),0)}
 const page=p=>{$$('.q-pg',L).forEach(e=>e.classList.toggle('on',e.dataset.p===p));$('#url',L).textContent='kanzel-eg.vercel.app'+(p==='book'||p==='done'?'/booking':'')};
 const scr=(el,y)=>el.scrollTo({top:y,behavior:fast?'auto':'smooth'});
 
@@ -203,17 +203,17 @@ const chL=$('#kzsCh'),bars=$('.kzs-bars');
 chL.innerHTML=t.ch.map((c,i)=>`<li><button type="button" data-i="${i}" aria-label="${i+1}. ${esc(c[0])}"><span class="n">${i+1}</span><b>${c[0]}</b><span class="d"><span>${c[1]}</span></span><i class="pg" style="--dur:${D[i]}s"></i></button></li>`).join('');
 bars.innerHTML=t.ch.map((c,i)=>`<button type="button" data-i="${i}" aria-label="${i+1}. ${esc(c[0])}"></button>`).join('');
 const lis=$$('li',chL),bs=$$('button',bars);
-function chap(i){lis.forEach((l,k)=>{l.classList.toggle('on',k===i);l.classList.toggle('done',k<i);const p=g(l,'.pg');if(k===i){p.style.animation='none';void p.offsetWidth;p.style.animation=''}});bs.forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)})}
-function reset(){S={cart:[],orders:[],calls:[],bk:[],sold:[],id:0,clk:0,go:null,sk:'burrata',sq:1};
+function chap(i){two(i===4||i===5);lis.forEach((l,k)=>{l.classList.toggle('on',k===i);l.classList.toggle('done',k<i);const p=g(l,'.pg');if(k===i){p.style.animation='none';void p.offsetWidth;p.style.animation=''}});bs.forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)})}
+function reset(){two(false);S={cart:[],orders:[],calls:[],bk:[],sold:[],id:0,clk:0,go:null,sk:'burrata',sq:1};
  $$('.q-b',ms).forEach(e=>e.remove());inp.textContent='';ty.classList.remove('on');
  ['#bD','#bN','#bP'].forEach(s=>{g(L,s+' .v').textContent=''});$('#gv',L).textContent='2';$$('#bT b',L).forEach(b=>b.classList.remove('on'));
  $$('.q-ov',L).forEach(e=>ov(e,false));$$('.q-ov',R).forEach(e=>ov(e,false));ov(cb,false);ov($('#nt',R),false);$$('.q-nt',L).forEach(e=>ov(e,false));
  paintTm(0);$('#stB',L).innerHTML='';$('#qrc',L).classList.remove('lock');$$('.q-cam',L).forEach(e=>e.classList.remove('on'));
  page('');show(L,'chat');show(R,'rw');renderW();renderB();$('#rwS',R).scrollTop=0;lab('L',0);lab('R',0);scr(ms,0)}
 const CH=[
-async()=>{chap(0);lab('L',0);lab('R',0);show(L,'chat');act('L');await W(900);await ask(t.m1);await reply(t.r1,['menu',t.lk1]);await W(700);
+async()=>{chap(0);lab('L',0);lab('R',0);show(L,'chat');act('L');await W(900);await ask(t.m1);await reply(t.r1,1);await W(700);
  await tap(L,g(L,'[data-lk=menu]'));page('menu');show(L,'web');await W(900);const s=$('#pmS',L);scr(s,150);await W(1100);scr(s,320);await W(1100);scr(s,0);await W(500);await tap(L,$('#wx',L));show(L,'chat');await W(700)},
-async()=>{chap(1);show(L,'chat');act('L');await ask(t.m2);await reply(t.r2,['book',t.lk2]);await W(700);
+async()=>{chap(1);show(L,'chat');act('L');await W(900);
  await tap(L,g(L,'[data-lk=book]'));page('book');show(L,'web');await W(900);
  await tap(L,$('#bD',L));await type($('#bD',L),t.date,50);await tap(L,$('#bN',L));await type($('#bN',L),t.name,50);
  await tap(L,$('#gp',L));$('#gv',L).textContent='3';await W(200);await tap(L,$('#gp',L));$('#gv',L).textContent='4';
@@ -252,6 +252,10 @@ async()=>{chap(7);act('L');await tap(L,g(L,'.q-top .q-rd'));paintTm(1);show(L,'t
  await tap(L,$('#bell2',L));await toast(L,'#lt',t.w.call,1300);S.calls.push({id:1,ts:3,done:false});act('R');await notify(W_.nc,t.tbl+' 5');renderW();await W(600);
  await tap(R,g(R,'[data-a=call]'));S.calls[0].done=true;renderW();await W(800);
  await wReject(o,'cancelled','guest');act('L');await W(3600)}];
+
+/* ---------- mobile: size of the two-phone view ---------- */
+function fit(){const sw=parseFloat(getComputedStyle(root).getPropertyValue('--sw'))||264,k=Math.max(.42,Math.min(.8,(stg.clientWidth-14)/(2*(sw+20))));stg.style.setProperty('--k2',k.toFixed(3))}
+fit();addEventListener('resize',fit);if(window.ResizeObserver)new ResizeObserver(fit).observe(stg);
 
 /* ---------- play ---------- */
 let loopOn=true,gen=0;

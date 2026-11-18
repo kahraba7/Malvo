@@ -22,7 +22,7 @@ html[dir=rtl] .kzs-ch .pg{transform-origin:right}
 @keyframes kzsfill{to{transform:scaleX(1)}}
 .kzs-ct{grid-area:ct;display:flex;align-items:center;gap:14px;margin-top:20px}
 .kzs-ct small{font:300 12px var(--kb);color:rgba(244,239,221,.5)}
-.kzs-pp{all:unset;box-sizing:border-box;width:40px;height:40px;border-radius:50%;border:1px solid rgba(211,201,148,.55);display:grid;place-items:center;cursor:pointer;flex:none;transition:background .25s}
+.kzs-pp{all:unset;box-sizing:border-box;width:44px;height:44px;border-radius:50%;border:1px solid rgba(211,201,148,.55);display:grid;place-items:center;cursor:pointer;flex:none;transition:background .25s}
 .kzs-pp:hover{background:rgba(211,201,148,.16)}.kzs-pp:focus-visible{outline:2px solid var(--kg);outline-offset:3px}
 .kzs-pp i{width:12px;height:14px;border-left:3.5px solid var(--kg);border-right:3.5px solid var(--kg)}
 .kzs.pz .kzs-pp i{width:0;height:0;border:0;border-left:12px solid var(--kg);border-top:7px solid transparent;border-bottom:7px solid transparent}
@@ -71,6 +71,7 @@ html[dir=rtl] .kzs-ch .pg{transform-origin:right}
 .q-b.q-on{opacity:1;transform:none}.q-b.me{align-self:flex-end;background:var(--km);border-end-end-radius:4px;color:#fff}.q-b.th{align-self:flex-start;background:#1d3328;border:1px solid rgba(211,201,148,.18);border-end-start-radius:4px}
 .q-lk{display:block;margin-top:8px;border-radius:12px;overflow:hidden;background:#0e1a14;border:1px solid rgba(211,201,148,.3)}
 .q-lk .im{height:84px;display:grid;place-items:center;background:radial-gradient(70% 90% at 50% 40%,#2b4a36,#10211a)}.q-lk .im img{height:46px}
+.q-lbs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 8px 8px}.q-lbtn{display:block;text-align:center;font:500 12.5px/1.2 var(--kb);padding:9px 6px;border-radius:9px;background:rgba(211,201,148,.12);border:1px solid rgba(211,201,148,.42);color:var(--kc)}
 .q-lk div.tx{padding:8px 11px}.q-lk b{display:block;font:500 13px var(--kb)}.q-lk small{font:300 11.5px var(--kb);color:var(--kg)}
 .q-ty{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;border-radius:16px;background:#1d3328;opacity:0;height:0;padding-block:0;overflow:hidden;transition:opacity .25s}
 .q-ty.on{opacity:1;height:auto;padding-block:12px}.q-ty i{width:6px;height:6px;border-radius:50%;background:var(--kg);animation:qdot 1s infinite}.q-ty i:nth-child(2){animation-delay:.15s}.q-ty i:nth-child(3){animation-delay:.3s}
@@ -154,22 +155,30 @@ html[dir=rtl] .kzs-ch .pg{transform-origin:right}
 .q-ov .q-btn{margin-top:8px;height:46px}
 .q-tst{position:absolute;z-index:45;left:50%;bottom:26px;translate:-50% 0;padding:10px 18px;border-radius:99px;background:var(--kc);color:var(--kf);font:500 12.5px var(--kb);box-shadow:0 10px 28px rgba(0,0,0,.5);opacity:0;transform:translateY(16px);transition:.4s var(--ease);white-space:nowrap}.q-tst.on{opacity:1;transform:none}
 .ff,.ff *{transition:none!important;animation:none!important}
-/* small screens: one phone at a time, the stage follows the action */
+/* small screens: the guest phone alone and big; when staff act it shrinks and the staff phone joins it */
 @media(max-width:860px){
  .kzs{padding:82px 0 64px}
  .kzs-g{grid-template-columns:1fr;grid-template-areas:"hd" "st" "ch" "bars" "ct";row-gap:0}
  .kzs-hd .kz-h{font-size:clamp(2.2rem,9vw,3rem);margin-bottom:20px}
- .kzs{--sw:264}
- .kzs-st{position:relative;display:block;height:calc(var(--sw)*800/390*1px + 80px);margin-bottom:8px}
- .kzs-dv{position:absolute;left:50%;top:0;translate:-50% 0}
- .kzs-dv:not(.act){opacity:0;transform:translateX(34px) scale(.96);pointer-events:none}
- html[dir=rtl] .kzs-dv:not(.act){transform:translateX(-34px) scale(.96)}
+ .kzs{--sw:276}
+ .kzs-st{--k:1;--pw:calc(var(--sw)*1px + 20px);--phh:calc(var(--sw)*800/390*1px + 20px);--gp:12px;position:relative;display:block;height:calc(var(--phh)*var(--k) + 40px);margin-bottom:8px;transition:height .8s var(--ease)}
+ .kzs-st.two{--k:var(--k2,.56)}
+ .kzs-dv{position:absolute;top:0;left:50%;translate:-50% 0;width:var(--pw);height:calc(var(--phh)*var(--k) + 40px);pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:0;transition:left .8s var(--ease),opacity .6s,filter .6s}
+ .kzs-dv:not(.act){transform:none}
+ .kzs-dv .kz-ph{transform:scale(var(--k));transform-origin:50% 0;transition:transform .8s var(--ease)}
+ .kzs-lb{position:absolute;left:0;right:0;top:calc(var(--phh)*var(--k) + 12px);justify-content:center;transition:top .8s var(--ease)}
+ .kzs-st:not(.two) .kzs-dv[data-s=R]{opacity:0;pointer-events:none}
+ .kzs-st.two .kzs-dv[data-s=L]{left:calc(50% - (var(--pw)*var(--k) + var(--gp))/2)}
+ .kzs-st.two .kzs-dv[data-s=R]{left:calc(50% + (var(--pw)*var(--k) + var(--gp))/2)}
+ html[dir=rtl] .kzs-st.two .kzs-dv[data-s=L]{left:calc(50% + (var(--pw)*var(--k) + var(--gp))/2)}
+ html[dir=rtl] .kzs-st.two .kzs-dv[data-s=R]{left:calc(50% - (var(--pw)*var(--k) + var(--gp))/2)}
+ .kzs-st.two .kzs-dv:not(.act){opacity:.5;filter:saturate(.6)}
  .kzs-ch{margin-top:6px;min-height:150px;align-content:start}.kzs-ch li:not(.on){display:none}
  .kzs-ch button{border-top:0;padding-top:0}.kzs-ch .pg{display:none}
- .kzs-bars{display:flex;gap:5px;margin-top:10px;grid-area:bars}
+ .kzs-bars{display:flex;gap:5px;margin-top:0;grid-area:bars}
  .kzs-ct{margin-top:14px}
- .kzs-bars button{all:unset;flex:1;height:22px;cursor:pointer;position:relative}.kzs-bars button::before{content:"";position:absolute;left:0;right:0;top:10px;height:3px;border-radius:3px;background:rgba(211,201,148,.22)}.kzs-bars button.on::before,.kzs-bars button.done::before{background:var(--kg)}
+ .kzs-bars button{all:unset;flex:1;height:44px;cursor:pointer;position:relative}.kzs-bars button::before{content:"";position:absolute;left:0;right:0;top:20px;height:3px;border-radius:3px;background:rgba(211,201,148,.22)}.kzs-bars button.on::before,.kzs-bars button.done::before{background:var(--kg)}
  .kzs-bars button:focus-visible{outline:2px solid var(--kg)}
 }
-@media(max-width:360px){.kzs{--sw:232}}
-@media(prefers-reduced-motion:reduce){.kzs-dv,.q-s,.q-ov .pn{transition:none}}
+@media(max-width:380px){.kzs{--sw:250}}@media(max-width:340px){.kzs{--sw:224}}
+@media(prefers-reduced-motion:reduce){.kzs-dv,.kzs-st,.kzs-lb,.kzs-dv .kz-ph,.q-s,.q-ov .pn{transition:none}}
