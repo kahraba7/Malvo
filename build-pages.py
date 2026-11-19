@@ -28,9 +28,11 @@ L={'en':dict(ar=False,home='index.html',nav=[('Home','index.html'),('Projects','
  foot='© 2026 MALVO. جميع الحقوق محفوظة.',back='العودة إلى MALVO')}
 from urllib.parse import quote
 ix={'en':open('index.html',encoding='utf8').read(),'ar':open('ar.html',encoding='utf8').read()}
+FONTLINKS={'en':'<link rel="preload" href="fonts/Inter-400.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="fonts/Inter-500.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="fonts/SpaceGrotesk-VF.woff" as="font" type="font/woff" crossorigin><link rel="stylesheet" href="fonts.css">','ar':'<link rel="preload" href="fonts/Cairo-VF.woff" as="font" type="font/woff" crossorigin><link rel="stylesheet" href="fonts-ar.css">'}
 FONTS={'en':'Inter:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=Cormorant+Garamond:wght@500;600','ar':'Cairo:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600&family=Readex+Pro:wght@300;400;500'}
 LOGO='<svg viewBox="0 0 442 358" aria-hidden="true"><path d="M0 0 L218 169 L167 218 L0 86 Z"/><path d="M0 171 L72 227 L72 342 L0 342 Z"/><path d="M167 262 L338 98 L338 192 L167 358 Z"/><path d="M370 66 L442 0 L442 342 L370 342 Z"/></svg>'
 def wa(c):return WA+quote(c['wa'])
+AGWA={'en':WA+quote('Hi MALVO, I’m interested in the agency partnership for restaurant systems.'),'ar':WA+quote('مرحبًا MALVO، مهتم بالشراكة مع الوكالات لأنظمة المطاعم.')}
 def shell(*a,**k):
     return re.sub(r'&(?!#?\w+;)','&amp;',_shell(*a,**k))
 def _shell(lg,slug,title,desc,body,kz=False):
@@ -49,12 +51,11 @@ def _shell(lg,slug,title,desc,body,kz=False):
 <meta property="og:image" content="{D}{og}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{'ar_EG'if c['ar']else'en_US'}"><meta property="og:image:alt" content="{title}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{D}{og}">
 <link rel="canonical" href="{url}"><link rel="alternate" hreflang="en" href="{D+slug}"><link rel="alternate" hreflang="ar" href="{D+slug}-ar">
 <link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={FONTS[lg]}&display=swap">{css}</head>
+{FONTLINKS[lg]}{css}</head>
 <body><a class="skip" href="#main">{c['skip']}</a><div class="prog" id="prog" aria-hidden="true"></div>
 <header id="hdr"><div class="wrap bar"><a class="logo" href="{c['home']}" aria-label="{'MALVO، الرئيسية'if c['ar']else'MALVO home'}">{LOGO}<img src="malvo-wordmark.png" alt="" width="73" height="15"></a>
 <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="{'فتح القائمة'if c['ar']else'Open menu'}"><span></span><span></span><span></span></button>
-<nav id="menu" aria-label="{'القائمة الرئيسية'if c['ar']else'Main'}"><ul>{nav}<li><a class="lang" href="{sw}" hreflang="{'en'if c['ar']else'ar'}" lang="{'en'if c['ar']else'ar'}">{c['sw'][0]}</a></li><li><a class="btn pri" href="{wa(c)}" target="_blank" rel="noopener">{c['dt'] if slug=='restaurants' else c['lt']}</a></li></ul></nav></div></header>
+<nav id="menu" aria-label="{'القائمة الرئيسية'if c['ar']else'Main'}"><ul>{nav}<li><a class="lang" href="{sw}" hreflang="{'en'if c['ar']else'ar'}" lang="{'en'if c['ar']else'ar'}">{c['sw'][0]}</a></li><li><a class="btn pri" href="{AGWA[lg] if slug=='agencies' else wa(c)}" target="_blank" rel="noopener">{c['dt'] if slug=='restaurants' else c['lt']}</a></li></ul></nav></div></header>
 <main id="main">{body}</main>
 <footer class="pf"><div class="wrap"><span>{c['foot']}</span><a href="{c['home']}">{c['back']}</a></div></footer>
 {wabtn}{js}</body></html>'''
@@ -71,6 +72,10 @@ for lg in('en','ar'):
     import restaurants_page as rp
     body=rp.body(lg,wa(c),s,crumb(lg,[(p[0],f'projects{s}'),(p[1],None)]),None)
     open(f'restaurants{s}.html','w',encoding='utf8').write(shell(lg,'restaurants',r['t'],r['d'],body))
+    # agencies partner page (not in nav/sitemap, noindex)
+    import agencies_page as ap
+    body=ap.body(lg,AGWA[lg],s)
+    open(f'agencies{s}.html','w',encoding='utf8').write(shell(lg,'agencies',ap.T[lg]['t'],ap.T[lg]['d'],body).replace('<meta name="theme-color"','<meta name="robots" content="noindex"><meta name="theme-color"',1))
     # kanzel case study: the Kanzel world from the home page, standalone
     sec=re.search(r'<section id="restaurants".*?</section>',ix[lg],re.S).group(0).replace('href="#contact"',f'href="{wa(c)}" target="_blank" rel="noopener"')
     sec=re.sub(r'<h2 class="kz-h" id="kz-h1">(.*?)</h2>',r'<h1 class="kz-h" id="kz-h1">\1</h1>',sec,1,flags=re.S)

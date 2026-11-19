@@ -27,8 +27,8 @@ Edit the PROJECTS array at the top of main.js:
 - vercel.json adds security headers and a CSP. If you add analytics or another external script, extend script-src/connect-src.
 - Analytics is not installed (needs your provider/ID).
 
-## Fonts (self-hosting)
-Run `python3 self-host-fonts.py` once with internet access (before deploying). It downloads Inter, Space Grotesk and Cairo as woff2 into fonts/, switches every page to local fonts.css / fonts-ar.css with preloads, and removes Google hosts from the CSP in vercel.json.
+## Fonts (self-hosted, done)
+Fonts are served from fonts/ (WOFF, Latin subset for Inter / Space Grotesk / Cormorant Garamond; Cairo full). fonts.css (EN) and fonts-ar.css (AR) hold the @font-face rules; build-pages.py emits them for generated pages. CSP and the privacy pages no longer mention Google. Readex Pro (only the Arabic Kanzel section) is not bundled: it falls back to Cairo. self-host-fonts.py is obsolete, do not run it (it would put Google Fonts back).
 
 ## Kanzel (first project)
 - Featured project is defined in the PROJECTS array at the top of main.js (EN/AR text via T()). Assets: kanzel-reel.mp4 (silent 12s loop), kanzel-poster.jpg, kanzel-screens.jpg (phone number blurred).
@@ -62,3 +62,6 @@ kanzel-sim.js + kanzel-sim.css: autoplay scenario (guest chat, booking, QR scan,
 - Restaurants page: POS section + FAQ, "Book a demo" CTAs (header, hero, bottom), price and date made consistent (Ribeye 480; Friday without a calendar date), nav "Restaurants" now points to /restaurants.
 - build-pages.py: bare & escaped, twitter/og meta added, Arabic aria-labels, Kanzel case study gets an h1. Re-run `python3 build-pages.py` after editing restaurants_page.py.
 - privacy pages rewritten (WhatsApp, Kanzel iframe, Google Fonts). Keep the Google Fonts sentence as is: self-host-fonts.py replaces it.
+
+## Agencies page (partner pitch)
+- /agencies and /agencies-ar: short page (about 3,600px) to send to agencies. Built by build-pages.py from agencies_page.py (copy is at the top of that file). Not in the nav or sitemap, and noindex. Prices and partnership terms are intentionally not on it yet.

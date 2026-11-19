@@ -188,3 +188,19 @@
 .r-pos .fxg{grid-template-columns:repeat(4,1fr)}
 @media(max-width:1000px){.r-pos .fxg{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.r-pos .fxg{grid-template-columns:1fr}}
+
+.r-hero+.r-proof{border-top:1px solid rgba(255,255,255,.1);padding:clamp(40px,6vw,72px) 0}
+.xd>summary{cursor:pointer;display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border:1px solid var(--mist);border-radius:99px;background:#fff;font:600 15px var(--head);list-style:none}
+.xd>summary::-webkit-details-marker{display:none}.xd>summary::after{content:"+";color:var(--blue);font-size:18px;line-height:1}.xd[open]>summary::after{content:"\2212"}
+.xd>.xg{margin-top:18px}
+.r-cta .r-mail{margin:26px 0 0;font-size:1rem}.r-cta .r-mail a{color:#fff;text-decoration:underline;text-underline-offset:4px}
+
+/* agencies page */
+.ag-h{padding-bottom:clamp(56px,8vw,96px)}.ag-h h1{max-width:15ch}.ag-h .acts{margin-bottom:0}
+.ag-vid{justify-self:center;width:min(100%,290px);aspect-ratio:9/16;border-radius:28px;overflow:hidden;border:1px solid #2c3036;box-shadow:0 40px 80px -30px #000;background:#0e1411}.ag-vid video{width:100%;height:100%;object-fit:cover;display:block}
+.ag-g{padding:clamp(64px,9vw,110px) 0}.ag-g .r-hd{margin-bottom:clamp(28px,4vw,48px)}
+.ag-p{background:#fff;padding:clamp(56px,8vw,100px) 0}.ag-p .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,72px);align-items:center}.ag-p img{width:100%;height:auto;border-radius:20px;display:block}.ag-p h2{font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.03em;line-height:1.05;margin-bottom:16px}.ag-p p:not(.r-eb){color:var(--sub);max-width:42ch}.ag-p .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.ag-p .btn.sec{color:var(--ink)}
+.ag-s{padding:clamp(64px,9vw,110px) 0;background:var(--paper)}.ag-s .r-hd{margin-bottom:clamp(28px,4vw,48px)}.ag-s ol{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.ag-s li{background:#fff;border:1px solid var(--mist);border-radius:16px;padding:26px}.ag-s li span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;font:600 14px var(--head)}.ag-s li b{display:block;font:600 1.2rem var(--head);margin:16px 0 8px}.ag-s li p{color:var(--sub);font-size:15px}
+.ag-a{margin-top:28px;padding:24px 26px;border-radius:16px;background:var(--mist)}.ag-a b{font:600 1.05rem var(--head)}.ag-a ul{list-style:none;padding:0;margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}.ag-a li{font:500 14px var(--head);padding:8px 14px;border-radius:99px;background:#fff;border:1px solid #d8dee6}
+@media(max-width:860px){.ag-p .wrap,.ag-s ol{grid-template-columns:1fr}.ag-vid{width:min(100%,240px)}}
+@media(prefers-reduced-motion:reduce){.ag-vid video{display:none}.ag-vid{background:url(kanzel-poster.jpg) center/cover}}
