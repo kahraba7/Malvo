@@ -48,5 +48,17 @@
     }
    ]
   }
+ ],
+ "redirects": [
+  {
+   "source": "/projects",
+   "destination": "/#projects",
+   "permanent": false
+  },
+  {
+   "source": "/projects-ar",
+   "destination": "/ar#projects",
+   "permanent": false
+  }
  ]
 }

@@ -64,7 +64,7 @@ function renderProjects(){
     new IntersectionObserver((e,o)=>{ if (e[0].isIntersecting){ bp.classList.add('in'); o.disconnect(); } },{threshold:.25}).observe(bp);
   } else bp.classList.add('in');
 }
-renderProjects();
+if (work) renderProjects();
 
 const hdr = $('#hdr'), burger = $('#burger');
 const onScroll = () => hdr.classList.toggle('solid', scrollY > 40);

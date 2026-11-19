@@ -65,3 +65,23 @@ kanzel-sim.js + kanzel-sim.css: autoplay scenario (guest chat, booking, QR scan,
 
 ## Agencies page (partner pitch)
 - /agencies and /agencies-ar: short page (about 3,600px) to send to agencies. Built by build-pages.py from agencies_page.py (copy is at the top of that file). Not in the nav or sitemap, and noindex. Prices and partnership terms are intentionally not on it yet.
+
+## Changes (Nov 19): home = sector tiles
+- Home #projects is now sector tiles (Restaurants and cafés -> /restaurants, others "coming soon"). To add a sector: copy a `.sector` tile in index.html and ar.html (class `soon` = not clickable yet), then build its page like restaurants.
+- The long Kanzel scroll story is no longer on the home page. Its source is kanzel-section.html / kanzel-section-ar.html; build-pages.py reads them to make /kanzel and /kanzel-ar. Edit there, then re-run `python3 build-pages.py`.
+- /restaurants has a "Live projects" card (id="live") that opens /kanzel. Add more cards there as new restaurant projects go live.
+- Home nav/footer "Restaurants" now points to /restaurants. main.js skips the project render when #work is absent.
+
+## Language switch = animated globe (Nov 19)
+- Markup: `a.lang.globe` (inline SVG + code badge) in index.html / ar.html and in `globe()` inside build-pages.py (all generated pages). CSS: end of style.css ("Language globe"). Desktop shows the globe + EN/ع badge; the mobile menu shows globe + language name. Animation stops under prefers-reduced-motion.
+
+## Navigation cleanup (Nov 19)
+- Same menu on every page: Home / Services / About / Sectors / Contact + language globe + "Let's Talk". "Sectors" = home #projects (the tiles). Inner pages link to index.html#... (ar.html#... in Arabic).
+- /projects and /projects-ar were removed (they duplicated the tiles). vercel.json redirects them to the home tiles. Older notes above that mention the projects hub are obsolete.
+- pages.js now locks page scroll while the menu is open and closes it on link click, like main.js.
+
+## Agencies page update (Nov 19)
+- /agencies(-ar): 4-step partnership flow, "price and scope, project by project", "what we need from each client", "after launch" (ongoing support and updates), and an agency FAQ. All copy lives in agencies_page.py. No Kanzel numbers yet: add them next to the proof section when real figures exist.
+
+## Extras grid (restaurants page)
+- "Also available" shows the first four cards, a blurred peek of the next row, and a "See all extras" button (pages.js, class .xd2 / .xg.is-collapsed). Without JS everything is visible. Grid is 4 columns on desktop, 3 on tablet, 2 on phones, so the first four are always whole rows on desktop and phones.
